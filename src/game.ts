@@ -33,7 +33,7 @@ export const createGame = () => {
 		const frequency = 5000;
 
 		setInterval(() => {
-			const id = String(Math.floor(Math.random() * 1000));
+			const id = String(Math.floor(Math.random() * 5));
 
 			addObjet({ key: "fruits", id });
 		}, frequency);
