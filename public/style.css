@@ -1,0 +1,36 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	min-height: 100%;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-size: 1.6rem;
+}
+
+main {
+	min-height: 100vh;
+	height: 100vh;
+	max-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+canvas {
+	width: 400px;
+	height: 400px;
+	border: 10px solid #000;
+	image-rendering: pixelated;
+	image-rendering: crisp-edges;
+	image-rendering: -moz-crisp-edges;
+}
