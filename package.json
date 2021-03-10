@@ -21,7 +21,7 @@
 		"build": "yarn tsc && yarn bundle:client",
 		"bundle:client": "browserify dist/client.js > dist/client-bundle.js -t babelify",
 		"start": "yarn build && node dist/server.js",
-		"start:heroku": "yarn -D && yarn start",
+		"start:heroku": "yarn --dev && yarn start",
 		"update": "yarn upgrade-interactive --latest"
 	}
 }
