@@ -1,6 +1,6 @@
 {
 	"name": "my-first-game-with-canvas",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"type": "module",
 	"main": "dist/server.js",
 	"license": "MIT",
@@ -18,9 +18,11 @@
 		"typescript": "^4.2.3"
 	},
 	"scripts": {
-		"build": "yarn tsc && yarn bundle:client",
+		"build": "yarn tsc",
+		"bundle": "yarn bundle:client",
 		"bundle:client": "browserify dist/client.js > dist/client-bundle.js -t babelify",
-		"start": "yarn build && node dist/server.js",
+		"start": "yarn build && yarn bundle && yarn start",
+		"start:server": "node dist/server.js",
 		"update": "yarn upgrade-interactive --latest"
 	}
 }
