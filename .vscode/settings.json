@@ -1,5 +1,8 @@
 {
-	"cSpell.words": ["Parens"],
+	"cSpell.words": [
+		"Parens",
+		"preconnect"
+	],
 	"material-icon-theme.folders.associations": {
 		"types": "typescript",
 		"interfaces": "typescript"
