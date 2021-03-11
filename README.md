@@ -1,5 +1,5 @@
 <p align="center">
-	<h1 align="center">Game</h1>
+	<h1 align="center">The Game</h1>
 </p>
 
 <p align="center">
