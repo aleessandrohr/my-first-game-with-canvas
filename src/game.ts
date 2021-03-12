@@ -10,17 +10,19 @@ import { Player } from "./types/interfaces/Player";
 export const createGame = () => {
 	const canvas: Canvas = {
 		screen: {
-			width: 10,
-			height: 10,
+			width: 15,
+			height: 15,
 		},
-		size: {
-			width: 1,
-			height: 1,
-		},
-		colors: {
-			players: "black",
-			currentPlayer: "#f0db4f",
-			fruits: "green",
+		objects: {
+			size: {
+				width: 1,
+				height: 1,
+			},
+			colors: {
+				currentPlayer: "#f0db4f",
+				players: "black",
+				fruits: "green",
+			},
 		},
 	};
 
@@ -29,21 +31,22 @@ export const createGame = () => {
 		fruits: {},
 	};
 
-	const start = () => {
-		const frequency = 5000;
-
-		setInterval(() => {
-			const id = String(Math.floor(Math.random() * 5));
-
-			addObjet({ key: "fruits", id });
-		}, frequency);
-	};
-
-	const { subscribe, unsubscribe, notifyAll } = createObservers();
-
 	const setState = (newState: State) => {
 		Object.assign(state, newState);
 	};
+
+	const start = (frequency?: number, fruitNumbers?: number) => {
+		const currentFrequency = frequency ? frequency : 5000;
+		const currentFruitNumbers = fruitNumbers ? fruitNumbers : 10;
+
+		setInterval(() => {
+			const fruitId = Math.floor(Math.random() * currentFruitNumbers);
+
+			addObjet({ key: "fruits", id: fruitId });
+		}, currentFrequency);
+	};
+
+	const { subscribe, unsubscribe, notifyAll } = createObservers();
 
 	const addObjet = ({ key, id, x, y }: AddObject) => {
 		const positionX =
@@ -79,8 +82,8 @@ export const createGame = () => {
 		const player = state.players[playerId];
 
 		if (player) {
-			const keyPressed = key.toLowerCase();
-			const commandFunction = acceptedCommands[keyPressed];
+			const command = key.toLowerCase();
+			const commandFunction = acceptedCommands[command];
 
 			if (commandFunction) {
 				commandFunction(player);
@@ -92,18 +95,44 @@ export const createGame = () => {
 
 	const acceptedCommands: AcceptedCommands = {
 		w: player => {
-			player.y = Math.max(player.y - 1, 0);
+			const positionY = (player.y -= 1);
+
+			if (positionY === -1) {
+				const height = canvas.screen.height;
+				player.y = height - 1;
+			} else {
+				player.y = positionY;
+			}
 		},
 		s: player => {
-			const height = canvas.screen.width;
-			player.y = Math.min(player.y + 1, height - 1);
+			const positionY = (player.y += 1);
+			const height = canvas.screen.height;
+
+			if (positionY === height) {
+				player.y = 0;
+			} else {
+				player.y = positionY;
+			}
 		},
 		a: player => {
-			player.x = Math.max(player.x - 1, 0);
+			const positionX = (player.x -= 1);
+
+			if (positionX === -1) {
+				const width = canvas.screen.width;
+				player.x = width - 1;
+			} else {
+				player.x = positionX;
+			}
 		},
 		d: player => {
+			const positionX = (player.x += 1);
 			const width = canvas.screen.height;
-			player.x = Math.min(player.x + 1, width - 1);
+
+			if (positionX === width) {
+				player.x = 0;
+			} else {
+				player.x = positionX;
+			}
 		},
 	};
 
@@ -120,10 +149,10 @@ export const createGame = () => {
 	return {
 		canvas,
 		state,
+		setState,
 		start,
 		subscribe,
 		unsubscribe,
-		setState,
 		addObjet,
 		removeObject,
 		handleCommands,
