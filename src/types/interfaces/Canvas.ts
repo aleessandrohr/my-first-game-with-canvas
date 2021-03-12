@@ -3,13 +3,15 @@ export interface Canvas {
 		width: number;
 		height: number;
 	};
-	size: {
-		width: number;
-		height: number;
-	};
-	colors: {
-		players: string;
-		currentPlayer: string;
-		fruits: string;
+	objects: {
+		size: {
+			width: number;
+			height: number;
+		};
+		colors: {
+			currentPlayer: string;
+			players: string;
+			fruits: string;
+		};
 	};
 }
