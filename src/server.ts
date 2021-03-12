@@ -9,6 +9,7 @@ import { HandleCommands } from "./types/interfaces/HandleCommands.js";
 
 const app = express();
 const server = http.createServer(app);
+const port = process.env.PORT || 3000;
 const sockets = new Server(server);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,12 +32,10 @@ sockets.on("connection", (socket: Socket) => {
 		id: playerId,
 	});
 
-	const state = game.state;
+	socket.emit("init", game.state);
 
-	socket.emit("init", state);
-
-	socket.on("key-pressed", (command: HandleCommands) => {
-		command.type = "key-pressed";
+	socket.on("command", (command: HandleCommands) => {
+		command.type = "command";
 		command.playerId = playerId;
 
 		game.handleCommands(command);
@@ -47,6 +46,6 @@ sockets.on("connection", (socket: Socket) => {
 	});
 });
 
-server.listen(process.env.PORT || 3000, () => {
-	console.log("Server running.");
+server.listen(port, () => {
+	console.log(`Server running on port ${port}.`);
 });
