@@ -12,19 +12,28 @@ export const renderCanvas = ({
 		const player = state.players[playerId];
 
 		if (playerId === currentPlayerId) {
-			context.fillStyle = canvas.colors.currentPlayer;
+			context.fillStyle = canvas.objects.colors.currentPlayer;
 		} else {
-			context.fillStyle = canvas.colors.players;
+			context.fillStyle = canvas.objects.colors.players;
 		}
-
-		context.fillRect(player.x, player.y, canvas.size.width, canvas.size.height);
+		context.fillRect(
+			player.x,
+			player.y,
+			canvas.objects.size.width,
+			canvas.objects.size.height,
+		);
 	}
 
 	for (const fruitId in state.fruits) {
 		const fruit = state.fruits[fruitId];
 
-		context.fillStyle = canvas.colors.fruits;
-		context.fillRect(fruit.x, fruit.y, canvas.size.width, canvas.size.height);
+		context.fillStyle = canvas.objects.colors.fruits;
+		context.fillRect(
+			fruit.x,
+			fruit.y,
+			canvas.objects.size.width,
+			canvas.objects.size.height,
+		);
 	}
 
 	requestAnimationFrame(() => {
