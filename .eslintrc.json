@@ -1,0 +1,54 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"node": true,
+		"jest": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:prettier/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 12,
+		"project": "tsconfig.json",
+		"sourceType": "module"
+	},
+	"plugins": ["@typescript-eslint/eslint-plugin", "prettier", "import-helpers"],
+	"root": true,
+	"rules": {
+		"accessor-pairs": ["warn", { "setWithoutGet": false }],
+		"class-methods-use-this": "off",
+		"max-classes-per-file": "off",
+		"no-case-declarations": 0,
+		"no-new": "off",
+		"no-param-reassign": "error",
+		"no-prototype-builtins": "off",
+		"no-restricted-syntax": "off",
+		"no-underscore-dangle": "off",
+		"space-before-function-paren": "off",
+		"@typescript-eslint/ban-ts-ignore": 0,
+		"@typescript-eslint/camelcase": "off",
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"@typescript-eslint/interface-name-prefix": "off",
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-unused-vars": 0,
+		"@typescript-eslint/no-use-before-define": [
+			"error",
+			{ "functions": false }
+		],
+		"prettier/prettier": "error",
+		"import-helpers/order-imports": [
+			"warn",
+			{
+				"newlinesBetween": "always",
+				"groups": ["module", "/@/", ["parent", "sibling", "index"]],
+				"alphabetize": { "order": "asc", "ignoreCase": true }
+			}
+		]
+	}
+}
