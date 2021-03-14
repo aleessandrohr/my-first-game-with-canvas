@@ -1,16 +1,17 @@
 import express from "express";
-import { Server, Socket } from "socket.io";
 import http from "http";
 import path from "path";
+import { Server, Socket } from "socket.io";
 import { fileURLToPath } from "url";
-import { createGame } from "./game.js";
-import { Command } from "./types/interfaces/Command";
-import { HandleCommands } from "./types/interfaces/HandleCommands.js";
+
+import { createGame } from "@/game.js";
+import { Command } from "@/types/interfaces/Command";
+import { HandleCommands } from "@/types/interfaces/HandleCommands";
 
 const app = express();
 const server = http.createServer(app);
-const port = process.env.PORT || 3000;
 const sockets = new Server(server);
+const port = process.env.PORT || 3000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.use("/", express.static(__dirname + "/../public"));
