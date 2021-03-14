@@ -1,12 +1,13 @@
 import { io } from "socket.io-client";
-import { createGame } from "./game.js";
-import { createCommandListener } from "./commandListener.js";
-import { renderCanvas } from "./renderCanvas.js";
-import { State } from "./types/interfaces/State";
-import { Command } from "./types/interfaces/Command.js";
-import { AddObject } from "./types/interfaces/AddObject.js";
-import { RemoveObject } from "./types/interfaces/RemoveObject.js";
-import { HandleCommands } from "./types/interfaces/HandleCommands.js";
+
+import { createCommandListener } from "@/commandListener.js";
+import { createGame } from "@/game.js";
+import { renderCanvas } from "@/renderCanvas.js";
+import { AddObject } from "@/types/interfaces/AddObject.js";
+import { Command } from "@/types/interfaces/Command.js";
+import { HandleCommands } from "@/types/interfaces/HandleCommands.js";
+import { RemoveObject } from "@/types/interfaces/RemoveObject.js";
+import { State } from "@/types/interfaces/State";
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const context = canvas.getContext("2d");
