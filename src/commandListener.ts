@@ -1,7 +1,7 @@
-import { createObservers } from "./observers.js";
-import { getCurrentDevice } from "./device.js";
+import { getDevice } from "./device.js";
 import { createDirectionalListener } from "./directionalListener";
 import { createKeyboardListener } from "./keyboardListener.js";
+import { createObservers } from "./observers.js";
 
 export const createCommandListener = () => {
 	const {
@@ -12,7 +12,7 @@ export const createCommandListener = () => {
 	} = createObservers();
 
 	const createListener = () => {
-		const { Mobile } = getCurrentDevice();
+		const { Mobile } = getDevice();
 
 		if (Mobile) {
 			const { registerPlayerId } = createDirectionalListener(notifyAll);
