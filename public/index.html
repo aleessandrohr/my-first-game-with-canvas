@@ -12,10 +12,6 @@
 			rel="stylesheet"
 		/>
 		<link
-			href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
-			rel="stylesheet"
-		/>
-		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
 			integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
@@ -23,12 +19,9 @@
 		/>
 	</head>
 	<body>
-		<header>
-			<h1>The Game</h1>
-		</header>
 		<main>
 			<canvas id="canvas" width="15" height="15"></canvas>
-			<div class="directional" id="directional">
+			<section class="directional" id="directional">
 				<button class="directional-up" id="directional-up">
 					<i class="fas fa-arrow-circle-up"></i>
 				</button>
@@ -43,7 +36,7 @@
 				<button class="directional-down" id="directional-down">
 					<i class="fas fa-arrow-circle-down"></i>
 				</button>
-			</div>
+			</section>
 		</main>
 		<script src="/dist/client-bundle.js" type="module"></script>
 	</body>
