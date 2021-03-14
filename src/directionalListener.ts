@@ -14,13 +14,7 @@ export const createDirectionalListener = (
 	}
 
 	const handleDirectional = (directionalPressed: string) => {
-		const command = {
-			type: "command",
-			playerId,
-			key: directionalPressed,
-		};
-
-		notifyAll(command);
+		notifyAll({ type: "command", playerId, key: directionalPressed });
 	};
 
 	const directionalUp = document.getElementById("directional-up");
