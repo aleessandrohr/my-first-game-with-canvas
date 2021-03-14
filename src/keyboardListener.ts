@@ -8,13 +8,7 @@ export const createKeyboardListener = (notifyAll: (command: any) => void) => {
 	const handleKeydown = (event: KeyboardEvent) => {
 		const keyPressed = event.key;
 
-		const command = {
-			type: "command",
-			playerId,
-			key: keyPressed,
-		};
-
-		notifyAll(command);
+		notifyAll({ type: "command", playerId, key: keyPressed });
 	};
 
 	document.addEventListener("keydown", handleKeydown);
