@@ -1,4 +1,4 @@
-import { RenderCanvas } from "./types/interfaces/RenderCanvas";
+import { RenderCanvas } from "@/types/interfaces/RenderCanvas";
 
 export const renderCanvas = ({
 	context,
@@ -12,9 +12,9 @@ export const renderCanvas = ({
 		const player = state.players[playerId];
 
 		if (playerId === currentPlayerId) {
-			context.fillStyle = canvas.objects.colors.currentPlayer;
+			context.fillStyle = canvas.colors.currentPlayer;
 		} else {
-			context.fillStyle = canvas.objects.colors.players;
+			context.fillStyle = canvas.colors.players;
 		}
 		context.fillRect(
 			player.x,
@@ -27,7 +27,7 @@ export const renderCanvas = ({
 	for (const fruitId in state.fruits) {
 		const fruit = state.fruits[fruitId];
 
-		context.fillStyle = canvas.objects.colors.fruits;
+		context.fillStyle = canvas.colors.fruits;
 		context.fillRect(
 			fruit.x,
 			fruit.y,
