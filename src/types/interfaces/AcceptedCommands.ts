@@ -1,5 +1,5 @@
-import { Player } from "./Player";
+import { IObject } from "./Object";
 
 export interface AcceptedCommands {
-	[key: string]: (player: Player) => void;
+	[key: string]: (player: IObject) => void;
 }
