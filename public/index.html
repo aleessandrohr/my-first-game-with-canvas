@@ -21,7 +21,7 @@
 	<body>
 		<main>
 			<canvas id="canvas" width="15" height="15"></canvas>
-			<section class="directional" id="directional">
+			<div class="directional" id="directional">
 				<button class="directional-up" id="directional-up">
 					<i class="fas fa-arrow-circle-up"></i>
 				</button>
@@ -36,8 +36,9 @@
 				<button class="directional-down" id="directional-down">
 					<i class="fas fa-arrow-circle-down"></i>
 				</button>
-			</section>
+			</div>
 		</main>
+		<audio src="/sounds/collect.mp3" id="collect"></audio>
 		<script src="/dist/client-bundle.js" type="module"></script>
 	</body>
 </html>
