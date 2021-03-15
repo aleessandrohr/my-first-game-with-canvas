@@ -1,7 +1,7 @@
-import { getDevice } from "./device.js";
-import { createDirectionalListener } from "./directionalListener";
-import { createKeyboardListener } from "./keyboardListener.js";
-import { createObservers } from "./observers.js";
+import { getDevice } from "@/device.js";
+import { createDirectionalListener } from "@/directionalListener";
+import { createKeyboardListener } from "@/keyboardListener.js";
+import { createObservers } from "@/observers.js";
 
 export const createCommandListener = () => {
 	const {
