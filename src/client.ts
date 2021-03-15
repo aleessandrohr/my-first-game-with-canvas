@@ -13,11 +13,11 @@ import { State } from "@/types/interfaces/State";
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const context = canvas.getContext("2d");
 
-const socket = io();
-
 const game = createGame();
 
 const commandListener = createCommandListener();
+
+const socket = io();
 
 socket.on("connect", () => {
 	const playerId = socket.id;
@@ -65,5 +65,7 @@ socket.on("command", (command: HandleCommands) => {
 });
 
 socket.on("sound", (command: PlaySound) => {
-	game.playSound(command);
+	const id = command.id;
+
+	game.playSound(id);
 });
