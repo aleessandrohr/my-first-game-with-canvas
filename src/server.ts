@@ -16,6 +16,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.use("/", express.static(__dirname + "/../public"));
 app.use("/dist", express.static(__dirname + "/../dist"));
+app.use("/sounds", express.static(__dirname + "/../sounds"));
 
 const game = createGame();
 
