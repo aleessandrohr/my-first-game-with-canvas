@@ -4,6 +4,7 @@ import { AddObject } from "@/types/interfaces/AddObject";
 import { Canvas } from "@/types/interfaces/Canvas";
 import { HandleCommands } from "@/types/interfaces/HandleCommands";
 import { IObject } from "@/types/interfaces/Object";
+import { PlaySound } from "@/types/interfaces/PlaySound";
 import { RemoveObject } from "@/types/interfaces/RemoveObject";
 import { State } from "@/types/interfaces/State";
 
@@ -67,11 +68,19 @@ export const createGame = () => {
 		delete state[key][id];
 	};
 
+	const playSound = ({ id }: PlaySound) => {
+		const sound = document.getElementById(id) as HTMLAudioElement;
+		sound.pause();
+		sound.currentTime = 0;
+		sound.play();
+	};
+
 	const checkForFruitCollision = (player: IObject) => {
 		for (const fruitId in state.fruits) {
 			const fruit = state.fruits[fruitId];
 
 			if (player.x === fruit.x && player.y === fruit.y) {
+				notifyAll({ type: "sound", id: "collect" });
 				removeObject({ key: "fruits", id: fruitId });
 			}
 		}
@@ -151,11 +160,12 @@ export const createGame = () => {
 		canvas,
 		state,
 		setState,
-		start,
 		subscribe,
 		unsubscribe,
 		addObjet,
 		removeObject,
+		playSound,
 		handleCommands,
+		start,
 	};
 };
