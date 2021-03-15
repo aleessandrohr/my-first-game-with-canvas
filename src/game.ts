@@ -4,7 +4,6 @@ import { AddObject } from "@/types/interfaces/AddObject";
 import { Canvas } from "@/types/interfaces/Canvas";
 import { HandleCommands } from "@/types/interfaces/HandleCommands";
 import { IObject } from "@/types/interfaces/Object";
-import { PlaySound } from "@/types/interfaces/PlaySound";
 import { RemoveObject } from "@/types/interfaces/RemoveObject";
 import { State } from "@/types/interfaces/State";
 
@@ -19,11 +18,11 @@ export const createGame = () => {
 				width: 1,
 				height: 1,
 			},
-		},
-		colors: {
-			currentPlayer: "#f0db4f",
-			players: "black",
-			fruits: "green",
+			colors: {
+				currentPlayer: "#f0db4f",
+				players: "black",
+				fruits: "green",
+			},
 		},
 	};
 
@@ -38,26 +37,6 @@ export const createGame = () => {
 
 	const { subscribe, unsubscribe, notifyAll } = createObservers();
 
-	const addObjet = ({ key, id, x, y }: AddObject) => {
-		const positionX =
-			x || x === 0 ? x : Math.floor(Math.random() * canvas.screen.width);
-		const positionY =
-			y || y === 0 ? y : Math.floor(Math.random() * canvas.screen.height);
-
-		notifyAll({
-			type: "add-object",
-			key,
-			id,
-			x: positionX,
-			y: positionY,
-		});
-
-		state[key][id] = {
-			x: positionX,
-			y: positionY,
-		};
-	};
-
 	const removeObject = ({ key, id }: RemoveObject) => {
 		notifyAll({
 			type: "remove-object",
@@ -68,11 +47,19 @@ export const createGame = () => {
 		delete state[key][id];
 	};
 
-	const playSound = ({ id }: PlaySound) => {
-		const sound = document.getElementById(id) as HTMLAudioElement;
-		sound.pause();
-		sound.currentTime = 0;
-		sound.play();
+	const checkForAllFruitCollision = () => {
+		for (const playerId in state.players) {
+			const player = state.players[playerId];
+
+			for (const fruitId in state.fruits) {
+				const fruit = state.fruits[fruitId];
+
+				if (player.x === fruit.x && player.y === fruit.y) {
+					notifyAll({ type: "sound", id: "collect" });
+					removeObject({ key: "fruits", id: fruitId });
+				}
+			}
+		}
 	};
 
 	const checkForFruitCollision = (player: IObject) => {
@@ -83,6 +70,36 @@ export const createGame = () => {
 				notifyAll({ type: "sound", id: "collect" });
 				removeObject({ key: "fruits", id: fruitId });
 			}
+		}
+	};
+
+	const addObjet = ({
+		key,
+		id,
+		x = Math.floor(Math.random() * canvas.screen.width),
+		y = Math.floor(Math.random() * canvas.screen.height),
+	}: AddObject) => {
+		notifyAll({
+			type: "add-object",
+			key,
+			id,
+			x,
+			y,
+		});
+
+		state[key][id] = {
+			x,
+			y,
+		};
+
+		switch (key) {
+			case "players":
+				const player = state.players[id];
+				checkForFruitCollision(player);
+				break;
+			case "fruits":
+				checkForAllFruitCollision();
+				break;
 		}
 	};
 
@@ -129,8 +146,8 @@ export const createGame = () => {
 		},
 	};
 
-	const handleCommands = ({ type, playerId, key }: HandleCommands) => {
-		notifyAll({ type, playerId, key });
+	const handleCommands = ({ playerId, key }: HandleCommands) => {
+		notifyAll({ type: "command", playerId, key });
 
 		const player = state.players[playerId];
 
@@ -145,15 +162,19 @@ export const createGame = () => {
 		}
 	};
 
-	const start = (frequency?: number, fruitNumbers?: number) => {
-		const currentFrequency = frequency ? frequency : 5000;
-		const currentFruitNumbers = fruitNumbers ? fruitNumbers : 15;
+	const playSound = (id: string) => {
+		const sound = document.getElementById(id) as HTMLAudioElement;
+		sound.pause();
+		sound.currentTime = 0;
+		sound.play();
+	};
 
+	const start = (frequency = 5000, fruitNumbers = 30) => {
 		setInterval(() => {
-			const fruitId = Math.floor(Math.random() * currentFruitNumbers);
+			const fruitId = Math.floor(Math.random() * fruitNumbers);
 
 			addObjet({ key: "fruits", id: fruitId });
-		}, currentFrequency);
+		}, frequency);
 	};
 
 	return {
@@ -164,8 +185,8 @@ export const createGame = () => {
 		unsubscribe,
 		addObjet,
 		removeObject,
-		playSound,
 		handleCommands,
+		playSound,
 		start,
 	};
 };
