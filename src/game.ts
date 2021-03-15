@@ -47,7 +47,7 @@ export const createGame = () => {
 		delete state[key][id];
 	};
 
-	const checkForAllFruitCollision = () => {
+	const checkAllPlayersForFruitCollision = () => {
 		for (const playerId in state.players) {
 			const player = state.players[playerId];
 
@@ -98,7 +98,7 @@ export const createGame = () => {
 				checkForFruitCollision(player);
 				break;
 			case "fruits":
-				checkForAllFruitCollision();
+				checkAllPlayersForFruitCollision();
 				break;
 		}
 	};
