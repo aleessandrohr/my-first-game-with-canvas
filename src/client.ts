@@ -6,6 +6,7 @@ import { renderCanvas } from "@/renderCanvas.js";
 import { AddObject } from "@/types/interfaces/AddObject.js";
 import { Command } from "@/types/interfaces/Command.js";
 import { HandleCommands } from "@/types/interfaces/HandleCommands.js";
+import { PlaySound } from "@/types/interfaces/PlaySound";
 import { RemoveObject } from "@/types/interfaces/RemoveObject.js";
 import { State } from "@/types/interfaces/State";
 
@@ -61,4 +62,8 @@ socket.on("command", (command: HandleCommands) => {
 	if (playerId !== command.playerId) {
 		game.handleCommands(command);
 	}
+});
+
+socket.on("sound", (command: PlaySound) => {
+	game.playSound(command);
 });
