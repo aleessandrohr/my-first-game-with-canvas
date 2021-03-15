@@ -8,10 +8,10 @@ export interface Canvas {
 			width: number;
 			height: number;
 		};
-	};
-	colors: {
-		currentPlayer: string;
-		players: string;
-		fruits: string;
+		colors: {
+			currentPlayer: string;
+			players: string;
+			fruits: string;
+		};
 	};
 }
