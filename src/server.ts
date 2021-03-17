@@ -29,10 +29,7 @@ game.subscribe((command: Command) => {
 sockets.on("connection", (socket: Socket) => {
 	const playerId = socket.id;
 
-	game.addObjet({
-		key: "players",
-		id: playerId,
-	});
+	game.addPlayer({ id: playerId });
 
 	socket.emit("init", game.state);
 
@@ -44,7 +41,7 @@ sockets.on("connection", (socket: Socket) => {
 	});
 
 	socket.on("disconnect", () => {
-		game.removeObject({ key: "players", id: playerId });
+		game.removePlayer(playerId);
 	});
 });
 
