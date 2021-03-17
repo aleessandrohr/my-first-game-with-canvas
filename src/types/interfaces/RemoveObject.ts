@@ -1,4 +1,3 @@
 export interface RemoveObject {
-	key: "players" | "fruits";
-	id: string;
+	id: string | number;
 }
