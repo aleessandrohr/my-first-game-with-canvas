@@ -1,7 +1,7 @@
 export const createDirectionalListener = (
 	notifyAll: (command: any) => void,
 ) => {
-	let playerId: string | null = null;
+	let playerId: string;
 
 	const registerPlayerId = (id: string) => {
 		playerId = id;
@@ -38,7 +38,5 @@ export const createDirectionalListener = (
 		handleDirectional("d");
 	});
 
-	return {
-		registerPlayerId,
-	};
+	return { registerPlayerId };
 };
