@@ -1,11 +1,14 @@
-export const createObservers = () => {
-	const observers = [] as Array<(command: any) => void>;
+import { Observer } from "@/types/types/Observer";
+import { Observers } from "@/types/types/Observers";
 
-	const subscribe = (observerFunction: (command: any) => void) => {
+export const createObservers = () => {
+	const observers = [] as Observers;
+
+	const subscribe = (observerFunction: Observer) => {
 		observers.push(observerFunction);
 	};
 
-	const unsubscribe = (observerFunction: (command: any) => void) => {
+	const unsubscribe = (observerFunction: Observer) => {
 		observers.splice(observers.indexOf(observerFunction), 1);
 	};
 
