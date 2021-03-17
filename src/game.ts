@@ -3,8 +3,6 @@ import { AcceptedCommands } from "@/types/interfaces/AcceptedCommands";
 import { AddObject } from "@/types/interfaces/AddObject";
 import { Canvas } from "@/types/interfaces/Canvas";
 import { HandleCommands } from "@/types/interfaces/HandleCommands";
-import { IObject } from "@/types/interfaces/Object";
-import { RemoveObject } from "@/types/interfaces/RemoveObject";
 import { State } from "@/types/interfaces/State";
 
 export const createGame = () => {
@@ -37,111 +35,123 @@ export const createGame = () => {
 
 	const { subscribe, unsubscribe, notifyAll } = createObservers();
 
-	const removeObject = ({ key, id }: RemoveObject) => {
-		notifyAll({
-			type: "remove-object",
-			key,
-			id,
-		});
+	const removePlayer = (id: string | number) => {
+		notifyAll({ type: "remove-player", id });
 
-		delete state[key][id];
+		delete state.players[id];
 	};
 
-	const checkAllPlayersForFruitCollision = () => {
+	const removeFruit = (id: string | number) => {
+		notifyAll({ type: "remove-fruit", id });
+
+		delete state.fruits[id];
+	};
+
+	const checkForPlayerCollision = (fruitId: string | number) => {
+		const fruit = state.fruits[fruitId];
+
 		for (const playerId in state.players) {
 			const player = state.players[playerId];
 
-			for (const fruitId in state.fruits) {
-				const fruit = state.fruits[fruitId];
-
-				if (player.x === fruit.x && player.y === fruit.y) {
-					notifyAll({ type: "sound", id: "collect" });
-					removeObject({ key: "fruits", id: fruitId });
-				}
+			if (fruit.x === player.x && fruit.y === player.y) {
+				notifyAll({ type: "sound", id: "collect" });
+				removeFruit(fruitId);
 			}
 		}
 	};
 
-	const checkForFruitCollision = (player: IObject) => {
+	const checkForFruitCollision = (playerId: string | number) => {
+		const player = state.players[playerId];
+
 		for (const fruitId in state.fruits) {
 			const fruit = state.fruits[fruitId];
 
 			if (player.x === fruit.x && player.y === fruit.y) {
 				notifyAll({ type: "sound", id: "collect" });
-				removeObject({ key: "fruits", id: fruitId });
+				removeFruit(fruitId);
 			}
 		}
 	};
 
-	const addObjet = ({
-		key,
+	const addPlayer = ({
 		id,
 		x = Math.floor(Math.random() * canvas.screen.width),
 		y = Math.floor(Math.random() * canvas.screen.height),
 	}: AddObject) => {
 		notifyAll({
-			type: "add-object",
-			key,
+			type: "add-player",
 			id,
 			x,
 			y,
 		});
 
-		state[key][id] = {
+		state.players[id] = {
 			x,
 			y,
 		};
 
-		switch (key) {
-			case "players":
-				const player = state.players[id];
-				checkForFruitCollision(player);
-				break;
-			case "fruits":
-				checkAllPlayersForFruitCollision();
-				break;
-		}
+		checkForFruitCollision(id);
+	};
+
+	const addFruit = ({
+		id,
+		x = Math.floor(Math.random() * canvas.screen.width),
+		y = Math.floor(Math.random() * canvas.screen.height),
+	}: AddObject) => {
+		notifyAll({
+			type: "add-fruit",
+			id,
+			x,
+			y,
+		});
+
+		state.fruits[id] = {
+			x,
+			y,
+		};
+
+		checkForPlayerCollision(id);
 	};
 
 	const acceptedCommands: AcceptedCommands = {
 		w: player => {
-			const positionY = (player.y -= 1);
+			const y = (player.y -= 1);
 
-			if (positionY === -1) {
+			if (y === -1) {
 				const height = canvas.screen.height;
 				player.y = height - 1;
 			} else {
-				player.y = positionY;
+				player.y = y;
 			}
 		},
 		s: player => {
-			const positionY = (player.y += 1);
+			const y = (player.y += 1);
 			const height = canvas.screen.height;
 
-			if (positionY === height) {
+			if (y === height) {
 				player.y = 0;
 			} else {
-				player.y = positionY;
+				player.y = y;
 			}
 		},
 		a: player => {
-			const positionX = (player.x -= 1);
+			const x = (player.x -= 1);
 
-			if (positionX === -1) {
+			if (x === -1) {
 				const width = canvas.screen.width;
 				player.x = width - 1;
 			} else {
-				player.x = positionX;
+				player.x = x;
 			}
 		},
 		d: player => {
-			const positionX = (player.x += 1);
+			const x = (player.x += 1);
 			const width = canvas.screen.height;
 
-			if (positionX === width) {
+			if (x === width) {
 				player.x = 0;
 			} else {
-				player.x = positionX;
+				player.x = x;
 			}
 		},
 	};
@@ -157,7 +167,7 @@ export const createGame = () => {
 
 			if (commandFunction) {
 				commandFunction(player);
-				checkForFruitCollision(player);
+				checkForFruitCollision(playerId);
 			}
 		}
 	};
@@ -173,7 +183,7 @@ export const createGame = () => {
 		setInterval(() => {
 			const fruitId = Math.floor(Math.random() * fruitNumbers);
 
-			addObjet({ key: "fruits", id: fruitId });
+			addFruit({ id: fruitId });
 		}, frequency);
 	};
 
@@ -183,8 +193,10 @@ export const createGame = () => {
 		setState,
 		subscribe,
 		unsubscribe,
-		addObjet,
-		removeObject,
+		addPlayer,
+		removePlayer,
+		addFruit,
+		removeFruit,
 		handleCommands,
 		playSound,
 		start,
