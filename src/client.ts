@@ -7,7 +7,7 @@ import { AddObject } from "@/types/interfaces/AddObject.js";
 import { Command } from "@/types/interfaces/Command.js";
 import { HandleCommands } from "@/types/interfaces/HandleCommands.js";
 import { PlaySound } from "@/types/interfaces/PlaySound";
-import { RemoveObject } from "@/types/interfaces/RemoveObject.js";
+import { RemoveObject } from "@/types/interfaces/RemoveObject";
 import { State } from "@/types/interfaces/State";
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -41,19 +41,27 @@ socket.on("init", (state: State) => {
 
 	game.setState(state);
 
-	commandListener.registerPlayerId(playerId);
+	commandListener.registerPlayer(playerId);
 	commandListener.subscribe(game.handleCommands);
 	commandListener.subscribe((command: Command) => {
 		socket.emit(command.type, command);
 	});
 });
 
-socket.on("add-object", (command: AddObject) => {
-	game.addObjet(command);
+socket.on("add-player", (command: AddObject) => {
+	game.addPlayer(command);
 });
 
-socket.on("remove-object", (command: RemoveObject) => {
-	game.removeObject(command);
+socket.on("remove-player", (command: RemoveObject) => {
+	game.removePlayer(command.id);
+});
+
+socket.on("add-fruit", (command: AddObject) => {
+	game.addFruit(command);
+});
+
+socket.on("remove-fruit", (command: RemoveObject) => {
+	game.removeFruit(command.id);
 });
 
 socket.on("command", (command: HandleCommands) => {
@@ -65,7 +73,5 @@ socket.on("command", (command: HandleCommands) => {
 });
 
 socket.on("sound", (command: PlaySound) => {
-	const id = command.id;
-
-	game.playSound(id);
+	game.playSound(command.id);
 });
