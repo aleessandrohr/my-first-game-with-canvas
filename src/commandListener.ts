@@ -11,24 +11,20 @@ export const createCommandListener = () => {
 		notifyAll,
 	} = createObservers();
 
-	let registerPlayerId: (id: string) => void;
+	let registerPlayer: (id: string) => void;
 
 	const { Mobile } = getDevice();
 
 	if (Mobile) {
-		const { registerPlayerId: registerPlayer } = createDirectionalListener(
-			notifyAll,
-		);
-		registerPlayerId = registerPlayer;
+		const { registerPlayerId } = createDirectionalListener(notifyAll);
+		registerPlayer = registerPlayerId;
 	} else {
-		const { registerPlayerId: registerPlayer } = createKeyboardListener(
-			notifyAll,
-		);
-		registerPlayerId = registerPlayer;
+		const { registerPlayerId } = createKeyboardListener(notifyAll);
+		registerPlayer = registerPlayerId;
 	}
 
 	return {
-		registerPlayerId,
+		registerPlayer,
 		subscribe,
 		unsubscribe,
 		unsubscribeAll,
