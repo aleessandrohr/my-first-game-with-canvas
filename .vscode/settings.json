@@ -4,7 +4,8 @@
 		"builtins",
 		"camelcase",
 		"paren",
-		"preconnect"
+		"preconnect",
+		"webcompat"
 	],
 	"material-icon-theme.folders.associations": {
 		"types": "typescript",
