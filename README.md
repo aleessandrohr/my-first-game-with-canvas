@@ -4,11 +4,11 @@
 
 <p align="center">
     <img
-      src="https://img.shields.io/github/license/alessandrohenriqueramos/my-first-game-with-canvas?style=for-the-badge&labelColor=000000"
+      src="https://img.shields.io/github/license/alessandroramos13/my-first-game-with-canvas?style=for-the-badge&labelColor=000000"
       alt="license"
     />
     <img
-      src="https://img.shields.io/github/package-json/v/alessandrohenriqueramos/my-first-game-with-canvas?style=for-the-badge&labelColor=000000"
+      src="https://img.shields.io/github/package-json/v/alessandroramos13/my-first-game-with-canvas?style=for-the-badge&labelColor=000000"
       alt="version"
     />
 </p>
@@ -26,7 +26,7 @@ With these applications installed, open the terminal in the folder of your choic
 ### Execute
 
 ```zsh
-git clone https://github.com/alessandrohenriqueramos/my-first-game-with-canvas.git
+git clone https://github.com/alessandroramos13/my-first-game-with-canvas.git
 cd my-first-game-with-canvas
 ```
 
