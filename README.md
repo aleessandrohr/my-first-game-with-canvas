@@ -15,7 +15,7 @@
 
 ## Access
 
-Access the page by clicking [here](https://my-first-game-with-canvas.herokuapp.com/).
+Access the page by clicking [here](https://game.aleessandrohr.dev.br).
 
 ## Getting the code
 
